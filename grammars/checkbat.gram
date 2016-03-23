@@ -1,0 +1,4 @@
+#JSGF V1.0;
+
+grammar checkbat;
+public <command> = batteries (zero | one | two | three | four | five | six | seven | eight | nine);

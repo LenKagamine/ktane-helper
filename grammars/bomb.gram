@@ -1,0 +1,8 @@
+#JSGF V1.0;
+
+grammar bomb;
+public <command> = <yesno> | <bat> | <digit>;
+<yesno> = (parallel port | freak indicator | car indicator | serial vowel) (yes | no);
+<bat> = batteries <number>;
+<digit> = last digit (even | odd | <number>);
+<number> = (zero | one | two | three | four | five | six | seven | eight | nine);

@@ -1,0 +1,4 @@
+#JSGF V1.0;
+
+grammar checkcar;
+public <command> = car indicator (yes | no);

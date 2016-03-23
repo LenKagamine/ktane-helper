@@ -1,0 +1,6 @@
+#JSGF V1.0;
+
+grammar button;
+public <command> = <colour> <text>;
+<colour> = red | yellow | white | blue;
+<text> = abort | detonate | press | hold;

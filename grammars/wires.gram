@@ -1,0 +1,5 @@
+#JSGF V1.0;
+
+grammar wires;
+public <command> = <colour>;
+<colour> = (red | blue | white | black | yellow)+;

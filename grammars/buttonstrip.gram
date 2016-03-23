@@ -1,0 +1,4 @@
+#JSGF V1.0;
+
+grammar buttonstrip;
+public <command> = red | blue | yellow | white | black;

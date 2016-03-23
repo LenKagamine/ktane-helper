@@ -1,0 +1,4 @@
+#JSGF V1.0;
+
+grammar checkport;
+public <command> = parallel port (yes | no);
