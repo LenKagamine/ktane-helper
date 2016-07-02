@@ -41,7 +41,7 @@ class Speech:
         for i in range(int(duration / buffer_duration)):
             buffer = self.stream.read(CHUNK)
             power = audioop.rms(buffer, SAMPLE_WIDTH)
-            self.threshold = self.threshold * 0.9 + power * 0.15
+            self.threshold = self.threshold * 0.8 + power * 0.3
             print(".", end="", flush=True)
         print()
         self.calibrated = True

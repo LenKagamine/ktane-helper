@@ -1,7 +1,8 @@
 #JSGF V1.0;
 
 grammar menu;
-public <command> = <setup> | (defuse <module>) | <quit>;
+public <command> = <setup> | (defuse <module>) | <reset> | <quit>;
 <setup> = bomb setup;
-<module> = wires | button | keypad;
+<module> = wires | button | simon says | memory;
+<reset> = reset memory;
 <quit> = exit | terminate;

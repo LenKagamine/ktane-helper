@@ -1,0 +1,5 @@
+#JSGF V1.0;
+
+grammar memory;
+public <command> = display <numbers> <numbers> <numbers> <numbers> <numbers>;
+<numbers> = (one | two | three | four);
