@@ -1,6 +1,7 @@
 stage = 1
-pos = [0,0,0,0,0]  # position of pressed button
-num = [0,0,0,0,0]  # label of pressed button
+pos = [0, 0, 0, 0, 0]  # position of pressed button
+num = [0, 0, 0, 0, 0]  # label of pressed button
+
 
 def solve(r, bomb):
     global stage, pos, num
@@ -83,14 +84,15 @@ def solve(r, bomb):
 
     stage += 1
 
+
 def reset(r):
-    global stage, pos, num
+    global stage
     stage = 1
-    pos = [0,0,0,0,0]
-    num = [0,0,0,0,0]
     r.say("memory reset")
 
-def undo():
+
+def undo(r):
     global stage
     if stage > 1:
         stage -= 1
+    r.say("memory at stage " + str(stage))

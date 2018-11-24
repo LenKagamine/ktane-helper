@@ -8,6 +8,7 @@ class Bomb:
         self.bat = None
 
         self.ready = False
+        self.strikes = 0
 
         if False:
             self.port = True
@@ -27,14 +28,12 @@ class Bomb:
             return units.index(word)
         return -1
 
-
     def get_port(self, r):
         if self.port is None:
             r.say("parallel port?")
             choice = r.listen("grammars/checkport.gram").split()
             self.port = choice[2] == "yes"
         return self.port
-
 
     def get_frk(self, r):
         if self.frk is None:
@@ -43,14 +42,12 @@ class Bomb:
             self.frk = choice[2] == "yes"
         return self.frk
 
-
     def get_car(self, r):
         if self.car is None:
             r.say("car indicator?")
             choice = r.listen("grammars/checkcar.gram").split()
             self.car = choice[2] == "yes"
         return self.car
-
 
     def get_digit(self, r):
         if self.digit is None:
@@ -59,7 +56,6 @@ class Bomb:
             self.digit = self.stoi(choice[2]) % 2 == 0
         return self.digit
 
-
     def get_vowel(self, r):
         if self.vowel is None:
             r.say("is there a vowel in there serial number?")
@@ -67,14 +63,12 @@ class Bomb:
             self.vowel = choice[2] == "yes"
         return self.vowel
 
-
     def get_bat(self, r):
         if self.bat is None:
             r.say("number of batteries?")
             choice = r.listen("grammars/checkbat.gram").split()
             self.bat = self.stoi(choice[1])
         return self.bat
-
 
     def setup(self, r):
         r.say("bomb setup")
@@ -101,7 +95,6 @@ class Bomb:
                 self.ready = True
             else:
                 self.ready = False
-
 
     def reset(self):
         self.port = None

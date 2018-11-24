@@ -5,16 +5,16 @@ import subprocess
 
 import pyaudio
 from pocketsphinx import pocketsphinx
-from sphinxbase import sphinxbase
 
 FORMAT = pyaudio.paInt16
 SAMPLE_WIDTH = pyaudio.get_sample_size(FORMAT)
 SAMPLE_RATE = 16000
-CHUNK = 1024
+CHUNK = 2048
 
 buffer_duration = CHUNK / SAMPLE_RATE
 pre_length = int(0.3 / buffer_duration + 1)
 post_length = int(0.8 / buffer_duration + 1)
+
 
 class Speech:
     def __init__(self):
@@ -25,9 +25,9 @@ class Speech:
 
     def open_stream(self):
         stream = self.p.open(
-            channels = 1, format = FORMAT, rate = SAMPLE_RATE,
-            frames_per_buffer = CHUNK,
-            input = True
+            channels=1, format=FORMAT, rate=SAMPLE_RATE,
+            frames_per_buffer=CHUNK,
+            input=True
         )
         return stream
 
@@ -36,10 +36,10 @@ class Speech:
         self.stream.close()
         self.p.terminate()
 
-    def calibrate(self, duration = 1):
+    def calibrate(self, duration=1):
         print("Calibrating.", end="", flush=True)
-        for i in range(int(duration / buffer_duration)):
-            buffer = self.stream.read(CHUNK)
+        for _ in range(int(duration / buffer_duration)):
+            buffer = self.stream.read(CHUNK, exception_on_overflow=False)
             power = audioop.rms(buffer, SAMPLE_WIDTH)
             self.threshold = self.threshold * 0.8 + power * 0.3
             print(".", end="", flush=True)
@@ -47,7 +47,7 @@ class Speech:
         self.calibrated = True
         print("Calibrated to", self.threshold)
 
-    def listen(self, grammar = None):
+    def listen(self, grammar=None):
         while True:
             audio = self.hear()
             text = self.parse(audio, grammar=grammar)
@@ -67,7 +67,7 @@ class Speech:
         frames = deque()
         print("Listening.", end="", flush=True)
         while True:
-            buffer = self.stream.read(CHUNK)
+            buffer = self.stream.read(CHUNK, exception_on_overflow=False)
             if len(buffer) == 0:
                 break
             frames.append(buffer)
@@ -101,13 +101,14 @@ class Speech:
                         print()
                         print("Listening.", end="", flush=True)
 
-        for i in range(silence_num - post_length):
+        for _ in range(silence_num - post_length):
             frames.pop()
         return b"".join(list(frames))
 
-    def parse(self, raw_audio, grammar = None):
-        model_dir = os.path.join(os.path.dirname(os.path.normpath(__file__)), "pocketsphinx")
-        hmm = os.path.join(model_dir, "acoustic")
+    def parse(self, raw_audio, grammar=None):
+        root = os.path.dirname(os.path.normpath(__file__))
+        model_dir = os.path.join(root, "pocketsphinx")
+        hmm = os.path.join(model_dir, "en-us")
         lm = os.path.join(model_dir, "en-us.lm")
         dict = os.path.join(model_dir, "cmudict.dict")
 
@@ -117,7 +118,7 @@ class Speech:
         config.set_string("-logfn", os.devnull)
 
         if grammar is not None:
-            grammar_file = os.path.join(os.path.dirname(os.path.normpath(__file__)), grammar)
+            grammar_file = os.path.join(root, grammar)
             if not os.path.isfile(grammar_file):
                 raise IOError("missing grammar file")
             config.set_string("-jsgf", grammar)
@@ -136,4 +137,4 @@ class Speech:
 
     def say(self, text):
         print(text)
-        subprocess.call('espeak "' + text + '"', shell=True)
+        subprocess.call('./speak "' + text + '"', shell=True)

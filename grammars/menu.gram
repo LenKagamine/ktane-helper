@@ -1,8 +1,10 @@
 #JSGF V1.0;
 
 grammar menu;
-public <command> = <setup> | (defuse <module>) | <reset> | <quit>;
+public <command> = <setup> | (defuse <module>) | <strike> | <undo> | <reset> | <quit>;
 <setup> = bomb setup;
 <module> = wires | button | simon says | memory;
+<strike> = strikes (zero | one | two);
+<undo> = undo memory;
 <reset> = reset memory;
 <quit> = exit | terminate;
