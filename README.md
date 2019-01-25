@@ -4,12 +4,15 @@ A voice controlled helper for the game Keep Talking and Nobody Explodes.
 
 ## Requirements
 
-- [Python 3.3+](https://www.python.org) with pip
+- [Python 3.4+](https://www.python.org) with pip
 - [espeak](http://espeak.sourceforge.net)
 - [PyAudio 0.2.9+](https://pypi.org/project/PyAudio/)
 - [PocketSphinx](https://pypi.org/project/pocketsphinx/)
 
-Make sure espeak is added to your PATH and is accessible via command line.
+Notes:
+
+- Make sure espeak is added to your PATH and is accessible via command line.
+- Python 3.7 on Windows has issues with installing `pyaudio`. If you have trouble with this, check out [this issue](https://github.com/LenKagamine/ktane-helper/issues/2#issuecomment-457312606).
 
 Running `pip install pyaudio pocketsphinx` should be enough, but consult their documentation for details.
 
