@@ -5,6 +5,7 @@ import subprocess
 
 import pyaudio
 from pocketsphinx import pocketsphinx
+import pyttsx3
 
 FORMAT = pyaudio.paInt16
 SAMPLE_WIDTH = pyaudio.get_sample_size(FORMAT)
@@ -15,6 +16,7 @@ buffer_duration = CHUNK / SAMPLE_RATE
 pre_length = int(0.3 / buffer_duration + 1)
 post_length = int(0.8 / buffer_duration + 1)
 
+engine = pyttsx3.init()
 
 class Speech:
     def __init__(self):
@@ -137,4 +139,5 @@ class Speech:
 
     def say(self, text):
         print(text)
-        subprocess.call('./speak "' + text + '"', shell=True)
+        engine.say(text)
+        engine.runAndWait()
